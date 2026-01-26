@@ -11,9 +11,6 @@
     <!-- Import des icônes FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Import Markdown Parser pour les réponses de l'IA -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-
     <style>
         /* ================= VARIABLES & RESET ================= */
         :root {
@@ -24,7 +21,6 @@
             --text-dark: #333333;
             --text-light: #666666;
             --shadow: 0 4px 6px rgba(0,0,0,0.05); /* Ombre douce pour l'effet "case" */
-            --ai-color: #6e44ff;          /* Violet pour les features IA */
         }
 
         * {
@@ -153,7 +149,7 @@
                 inset 0 0 10px rgba(0,0,0,0.1); /* L'ombre interne diminue (plus de lumière) */
         }
 
-        /* ================= SECTION OBJECTIFS & IA FIT ================= */
+        /* ================= SECTION OBJECTIFS ================= */
         .objective-content {
             font-size: 1.1rem;
             color: var(--text-dark);
@@ -165,55 +161,6 @@
             font-weight: bold;
             background-color: rgba(255, 215, 0, 0.2);
             padding: 0 4px;
-        }
-
-        /* Style pour l'analyseur de compatibilité IA */
-        .ai-fit-container {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px dashed #ddd;
-        }
-
-        .ai-input-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .ai-input {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid #eee;
-            border-radius: 6px;
-            font-family: inherit;
-        }
-
-        .ai-btn {
-            background: linear-gradient(135deg, var(--primary-blue), var(--ai-color));
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: opacity 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .ai-btn:hover {
-            opacity: 0.9;
-        }
-
-        .ai-result {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #f0f7ff;
-            border-left: 4px solid var(--ai-color);
-            border-radius: 4px;
-            font-size: 0.95rem;
-            display: none; /* Caché par défaut */
         }
 
         /* ================= SECTION PASSIONS (2 Colonnes) ================= */
@@ -296,6 +243,11 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s;
+            /* Pour rendre la carte cliquable */
+            display: block; 
+            text-decoration: none;
+            color: inherit;
+            cursor: pointer;
         }
         
         .project-card:hover {
@@ -344,131 +296,6 @@
             margin-right: 5px;
         }
 
-        /* ================= CHATBOT IA ================= */
-        .chat-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .chat-btn {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, var(--ai-color), var(--primary-blue));
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: transform 0.3s;
-            border: none;
-        }
-
-        .chat-btn:hover {
-            transform: scale(1.1);
-        }
-
-        .chat-window {
-            position: absolute;
-            bottom: 80px;
-            right: 0;
-            width: 350px;
-            height: 450px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-            display: none; /* Caché par défaut */
-            flex-direction: column;
-            overflow: hidden;
-            border: 1px solid #eee;
-        }
-
-        .chat-header {
-            background: var(--primary-blue);
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chat-header h4 {
-            margin: 0;
-            font-size: 1rem;
-        }
-
-        .chat-messages {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background-color: #f9f9f9;
-        }
-
-        .message {
-            margin-bottom: 10px;
-            max-width: 80%;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 0.9rem;
-            word-wrap: break-word;
-        }
-
-        .message.bot {
-            background-color: #e2e8f0;
-            color: var(--text-dark);
-            align-self: flex-start;
-            border-bottom-left-radius: 0;
-        }
-
-        .message.user {
-            background-color: var(--ai-color);
-            color: white;
-            margin-left: auto; /* Aligne à droite */
-            border-bottom-right-radius: 0;
-        }
-
-        .chat-input-area {
-            padding: 10px;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 5px;
-            background: white;
-        }
-
-        .chat-input-area input {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            outline: none;
-        }
-
-        .chat-input-area button {
-            background: var(--primary-blue);
-            color: white;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .typing-indicator {
-            font-style: italic;
-            font-size: 0.8rem;
-            color: #888;
-            margin-bottom: 5px;
-            display: none;
-        }
-
         /* ================= FOOTER ================= */
         footer {
             background-color: var(--primary-blue);
@@ -507,11 +334,6 @@
             .header-text {
                 text-align: center;
             }
-
-            .chat-window {
-                width: 300px;
-                right: -10px; /* Ajustement mobile */
-            }
         }
     </style>
 </head>
@@ -538,7 +360,7 @@
 
     <div class="container">
 
-        <!-- 1. OBJECTIFS & IA FIT ANALYZER -->
+        <!-- 1. OBJECTIFS -->
         <section id="objectifs">
             <h2 class="section-title">Objectifs Professionnels</h2>
             <div class="card">
@@ -550,23 +372,6 @@
                     <p>
                         Je souhaite mettre ces compétences techniques pointues au service d'un acteur majeur de la transition énergétique. Mon objectif ultime est d'intégrer le groupe <span class="highlight">EDF</span> afin de participer activement aux défis de la production et de la distribution d'énergie.
                     </p>
-
-                    <!-- ✨ FEATURE IA 1 : ANALYSE DE COMPATIBILITÉ -->
-                    <div class="ai-fit-container">
-                        <h4 style="color: var(--ai-color); display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-magic"></i> Analyseur de Compatibilité (IA)
-                        </h4>
-                        <p style="font-size: 0.9rem; margin-bottom: 10px;">Recruteurs, entrez votre secteur (ex: Nucléaire, Automobile, R&D) pour voir comment mon profil s'adapte à vos besoins.</p>
-                        
-                        <div class="ai-input-group">
-                            <input type="text" id="sectorInput" class="ai-input" placeholder="Votre secteur d'activité (ex: Aéronautique)...">
-                            <button class="ai-btn" onclick="analyzeFit()">
-                                Analyser ✨
-                            </button>
-                        </div>
-                        <div id="aiFitResult" class="ai-result"></div>
-                    </div>
-
                 </div>
             </div>
         </section>
@@ -681,8 +486,8 @@
                     </div>
                 </article>
 
-                <!-- Projet 4 (SAE Multimètre) -->
-                <article class="project-card">
+                <!-- Projet 4 (SAE Multimètre) - REDIRECTION -->
+                <a href="sae-multimetre.html" class="project-card" title="Voir les détails du projet Multimètre">
                     <!-- Assurez-vous que l'image du multimètre est bien dans le dossier -->
                     <img src="1763544704584 (1).jpg" alt="Multimètre Numérique SAE">
                     
@@ -694,35 +499,11 @@
                             <span class="tag">Mesure</span>
                         </div>
                     </div>
-                </article>
+                </a>
 
             </div>
         </section>
 
-    </div>
-
-    <!-- ✨ FEATURE IA 2 : CHATBOT FLOTTANT -->
-    <div class="chat-widget">
-        <button class="chat-btn" onclick="toggleChat()" title="Discuter avec l'assistant IA">
-            <i class="fas fa-comment-dots"></i>
-        </button>
-        
-        <div class="chat-window" id="chatWindow">
-            <div class="chat-header">
-                <h4>Assistant Virtuel ✨</h4>
-                <i class="fas fa-times" style="cursor:pointer" onclick="toggleChat()"></i>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="message bot">
-                    Bonjour ! Je suis l'assistant IA de Baptiste. Je connais son portfolio par cœur. Une question sur ses compétences ou ses projets ?
-                </div>
-            </div>
-            <div class="typing-indicator" id="typingIndicator">L'IA réfléchit...</div>
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Votre question..." onkeypress="handleEnter(event)">
-                <button onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
-            </div>
-        </div>
     </div>
 
     <!-- FOOTER -->
@@ -739,125 +520,5 @@
         </div>
     </footer>
 
-    <!-- SCRIPT POUR GEMINI API -->
-    <script>
-        // ================= CONFIGURATION =================
-        const apidebut="AIza";
-        const apifin="SyBDi93n_Ek52G2iP__ykBvrmTRcoLo0qSQ";
-        const apiKey = apidebut+apifin; // La clé sera injectée par l'environnement
-        const MODEL_NAME = "gemini-2.5-flash-preview-09-2025";
-        
-        // Contexte global extrait du site pour l'IA
-        const getPortfolioContext = () => {
-            const bodyText = document.body.innerText;
-            // Nettoyage sommaire
-            return bodyText.replace(/\s+/g, ' ').substring(0, 10000); 
-        };
-
-        // Fonction générique d'appel à l'API
-        async function callGeminiAPI(prompt, systemInstruction = "") {
-            const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${apiKey}`;
-            
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) throw new Error("Erreur API");
-                
-                const data = await response.json();
-                return data.candidates?.[0]?.content?.parts?.[0]?.text || "Désolé, je n'ai pas pu générer de réponse.";
-            } catch (error) {
-                console.error(error);
-                return "Une erreur est survenue lors de la communication avec l'IA.";
-            }
-        }
-
-        // ================= FEATURE 1: ANALYSE COMPATIBILITÉ =================
-        async function analyzeFit() {
-            const sector = document.getElementById('sectorInput').value;
-            const resultDiv = document.getElementById('aiFitResult');
-            const btn = document.querySelector('.ai-btn');
-            
-            if (!sector) return;
-
-            // UI Loading
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyse...';
-            btn.disabled = true;
-            resultDiv.style.display = 'block';
-            resultDiv.innerHTML = "L'IA analyse le profil de Baptiste pour le secteur " + sector + "...";
-
-            // Prompt
-            const context = getPortfolioContext();
-            const systemPrompt = "Tu es un consultant carrière expert. Ton but est de 'vendre' le profil de Baptiste Maizeaud à un recruteur d'un secteur spécifique. Sois convaincant, professionnel et bref (max 3 phrases).";
-            const userPrompt = `Voici le portfolio de Baptiste : """${context}""". \n\n Le recruteur travaille dans ce secteur : "${sector}". Explique pourquoi Baptiste est un bon candidat pour ce secteur spécifique en liant ses compétences (GEII, Automatisme, Rigueur) aux besoins de ce secteur.`;
-
-            // Call API
-            const response = await callGeminiAPI(userPrompt, systemPrompt);
-
-            // Render Markdown
-            resultDiv.innerHTML = marked.parse(response);
-            
-            // Reset UI
-            btn.innerHTML = 'Analyser ✨';
-            btn.disabled = false;
-        }
-
-        // ================= FEATURE 2: CHATBOT =================
-        function toggleChat() {
-            const win = document.getElementById('chatWindow');
-            win.style.display = win.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function handleEnter(e) {
-            if (e.key === 'Enter') sendMessage();
-        }
-
-        async function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const messages = document.getElementById('chatMessages');
-            const indicator = document.getElementById('typingIndicator');
-            const userText = input.value;
-
-            if (!userText.trim()) return;
-
-            // Afficher message utilisateur
-            const userDiv = document.createElement('div');
-            userDiv.className = 'message user';
-            userDiv.innerText = userText;
-            messages.appendChild(userDiv);
-            
-            input.value = '';
-            messages.scrollTop = messages.scrollHeight;
-            indicator.style.display = 'block';
-
-            // Prompt
-            const context = getPortfolioContext();
-            const systemPrompt = `Tu es l'assistant virtuel professionnel de Baptiste Maizeaud. Tu réponds aux questions des recruteurs en te basant STRICTEMENT sur le contenu de son portfolio ci-dessous. 
-            Sois poli, concis et mets en avant ses qualités (Rigueur, Passion F1/Piano, Compétences GEII).
-            Si la réponse n'est pas dans le portfolio, dis poliment que tu ne sais pas mais propose de le contacter par email.
-            
-            Portfolio Context:
-            ${context}`;
-
-            // Call API
-            const aiResponse = await callGeminiAPI(userText, systemPrompt);
-
-            // Afficher réponse IA
-            indicator.style.display = 'none';
-            const botDiv = document.createElement('div');
-            botDiv.className = 'message bot';
-            botDiv.innerHTML = marked.parse(aiResponse); // Support markdown dans le chat
-            messages.appendChild(botDiv);
-            messages.scrollTop = messages.scrollHeight;
-        }
-    </script>
 </body>
 </html>
