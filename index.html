@@ -3,35 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio | GEII</title>
+    <title>Portfolio | GEII - Baptiste Maizeaud</title>
     
-    <!-- Import de la police Google Fonts (Roboto pour la propreté) -->
+    <!-- Import de la police Google Fonts (Roboto) -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     
     <!-- Import des icônes FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- Import Markdown Parser pour les réponses de l'IA -->
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Import Chart.js pour le graphique des compétences -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         /* ================= VARIABLES & RESET ================= */
         :root {
-            --primary-blue: #001f3f;      /* Bleu Marine : Rigueur, EDF, Technique */
-            --accent-yellow: #FFD700;     /* Jaune : Énergie, Électricité, Dynamisme */
-            --bg-color: #f4f6f8;          /* Gris très clair pour le fond de page */
-            --card-bg: #ffffff;           /* Blanc pour les cases */
+            --primary-blue: #001f3f;      /* Bleu Marine */
+            --accent-yellow: #FFD700;     /* Jaune */
+            --bg-color: #f4f6f8;          
+            --card-bg: #ffffff;           
             --text-dark: #333333;
             --text-light: #666666;
-            --shadow: 0 4px 6px rgba(0,0,0,0.05); /* Ombre douce pour l'effet "case" */
-            --ai-color: #6e44ff;          /* Violet pour les features IA */
+            --shadow: 0 4px 10px rgba(0,0,0,0.08);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Roboto', sans-serif;
@@ -47,11 +42,8 @@
             padding: 0 20px;
         }
 
-        section {
-            margin-bottom: 60px;
-        }
+        section { margin-bottom: 60px; }
 
-        /* Titres de section */
         .section-title {
             text-align: center;
             color: var(--primary-blue);
@@ -61,7 +53,6 @@
             padding-bottom: 10px;
         }
 
-        /* Petite ligne jaune sous les titres */
         .section-title::after {
             content: '';
             display: block;
@@ -72,26 +63,21 @@
             border-radius: 2px;
         }
 
-        /* ================= COMPOSANT "CASE" (CARD) ================= */
+        /* ================= COMPOSANT CARD ================= */
         .card {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 40px;
+            padding: 35px;
             box-shadow: var(--shadow);
             border-top: 4px solid var(--primary-blue);
             transition: transform 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
-        }
-
-        /* ================= HEADER / HERO (MODIFIÉ POUR PHOTO) ================= */
+        /* ================= HEADER / HERO ================= */
         header {
             background-color: var(--primary-blue);
             color: white;
-            padding: 60px 0 100px 0; /* Un peu plus d'espace en bas pour la découpe */
+            padding: 60px 0 100px 0; 
             clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
             margin-bottom: 50px;
         }
@@ -100,98 +86,36 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 60px; /* Espace aéré entre le texte et la photo */
-            flex-wrap: wrap; /* Pour que ça passe à la ligne sur mobile */
+            gap: 60px;
+            flex-wrap: wrap;
         }
 
-        .header-text {
-            text-align: left;
-            max-width: 600px;
-        }
+        .header-text { text-align: left; max-width: 600px; }
 
-        header h1 {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-            line-height: 1.2;
-        }
+        header h1 { font-size: 3rem; font-weight: 700; margin-bottom: 10px; }
 
         header .subtitle {
             font-size: 1.2rem;
             font-weight: 300;
             color: var(--accent-yellow);
             letter-spacing: 1px;
-            margin-top: 0;
         }
 
-        /* --- DESIGN DU HUBLOT (PHOTO DE PROFIL) --- */
         .profile-photo {
             width: 180px;
             height: 180px;
             border-radius: 50%;
             object-fit: cover; 
-            
-            /* Construction du style "Hublot" */
-            border: 4px solid white; /* 1. Joint d'étanchéité (blanc) */
-            box-shadow: 
-                0 0 0 6px var(--accent-yellow), /* 2. Cerclage de sécurité (jaune) */
-                0 0 0 12px var(--primary-blue), /* 3. Structure externe (bleu marine) */
-                0 15px 35px rgba(0,0,0,0.4),    /* 4. Ombre portée profonde pour le relief */
-                inset 0 0 20px rgba(0,0,0,0.3); /* 5. Ombre interne pour l'effet vitre */
-            
-            background-color: white;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            cursor: pointer;
-        }
-
-        .profile-photo:hover {
-            transform: scale(1.05); /* Léger zoom avant au survol */
-            box-shadow: 
-                0 0 0 6px var(--accent-yellow),
-                0 0 0 12px var(--primary-blue),
-                0 20px 45px rgba(0,0,0,0.5), /* L'ombre grandit */
-                inset 0 0 10px rgba(0,0,0,0.1); /* L'ombre interne diminue (plus de lumière) */
-        }
-
-        /* ================= SECTION OBJECTIFS ================= */
-        .objective-content {
-            font-size: 1.1rem;
-            color: var(--text-dark);
-            text-align: justify;
-        }
-        
-        .highlight {
-            color: var(--primary-blue);
-            font-weight: bold;
-            background-color: rgba(255, 215, 0, 0.2);
-            padding: 0 4px;
-        }
-
-        /* ================= SECTION PASSIONS (2 Colonnes) ================= */
-        .passions-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .passion-icon {
-            font-size: 2.5rem;
-            color: var(--accent-yellow);
-            margin-bottom: 20px;
-            display: block;
-            text-align: center;
+            border: 4px solid white;
+            box-shadow: 0 0 0 6px var(--accent-yellow), 0 0 0 12px var(--primary-blue), 0 15px 35px rgba(0,0,0,0.4);
         }
 
         /* ================= SECTION COMPÉTENCES ================= */
         .skills-container {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .skill-box {
-            flex: 1;
-            min-width: 300px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
         }
 
         .skill-header {
@@ -205,36 +129,56 @@
         .skill-header i {
             background-color: var(--primary-blue);
             color: var(--accent-yellow);
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            margin-right: 15px;
+            margin-right: 12px;
+            font-size: 0.9rem;
         }
 
-        .skill-list {
-            list-style: none;
-        }
-
+        .skill-list { list-style: none; }
         .skill-list li {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             padding-left: 20px;
             position: relative;
+            font-size: 0.95rem;
         }
 
         .skill-list li::before {
             content: '•';
             color: var(--accent-yellow);
             font-weight: bold;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             position: absolute;
             left: 0;
-            top: -5px;
+            top: -4px;
         }
 
-        /* ================= SECTION PROJETS ================= */
+        .level-badge {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 5px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .moyen { background: #e2e8f0; color: #475569; }
+        .haut { background: #fef3c7; color: #92400e; }
+
+        /* Style Graphique */
+        .chart-container {
+            margin-top: 30px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--accent-yellow);
+        }
+
+        /* ================= PROJETS ================= */
         .projects-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -247,48 +191,21 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             transition: transform 0.3s;
-            /* Pour rendre la carte cliquable */
-            display: block; 
             text-decoration: none;
             color: inherit;
-            cursor: pointer;
         }
         
-        .project-card:hover {
-            transform: translateY(-5px);
-        }
+        .project-card:hover { transform: translateY(-5px); }
 
-        /* Style pour les vraies images dans les cartes */
-        .project-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover; /* Recadre l'image sans la déformer */
-            display: block;
-        }
+        .project-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
 
         .project-img-placeholder {
-            width: 100%;
-            height: 180px;
-            background-color: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #777;
-            font-weight: bold;
+            width: 100%; height: 180px; background-color: #ddd;
+            display: flex; align-items: center; justify-content: center; color: #777;
         }
 
-        .project-body {
-            padding: 20px;
-        }
-
-        .project-body h3 {
-            color: var(--primary-blue);
-            margin-bottom: 10px;
-        }
-
-        .tags {
-            margin-top: 15px;
-        }
+        .project-body { padding: 20px; }
+        .project-body h3 { color: var(--primary-blue); margin-bottom: 10px; }
 
         .tag {
             display: inline-block;
@@ -309,53 +226,26 @@
             margin-top: 80px;
         }
 
-        .social-links a {
-            color: white;
-            margin: 0 15px;
-            font-size: 1.5rem;
-            transition: color 0.3s;
-        }
+        .social-links a { color: white; margin: 0 15px; font-size: 1.5rem; transition: 0.3s; }
+        .social-links a:hover { color: var(--accent-yellow); }
 
-        .social-links a:hover {
-            color: var(--accent-yellow);
-        }
-
-        /* ================= RESPONSIVE ================= */
         @media (max-width: 768px) {
-            .passions-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            header h1 {
-                font-size: 2rem;
-            }
-
-            .header-content {
-                flex-direction: column-reverse; /* Photo au dessus du texte sur mobile */
-                text-align: center;
-            }
-
-            .header-text {
-                text-align: center;
-            }
+            header h1 { font-size: 2rem; }
+            .header-content { flex-direction: column-reverse; text-align: center; }
+            .header-text { text-align: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- EN-TÊTE MODIFIÉ AVEC PHOTO -->
     <header>
         <div class="container">
             <div class="header-content">
-                <!-- Bloc Texte (Nom + Titre) -->
                 <div class="header-text">
                     <h1>Baptiste MAIZEAUD</h1>
-                    <p class="subtitle">BUT GEII | Electronique et systèmes embarqués</p>
+                    <p class="subtitle">BUT GEII | Électronique et systèmes embarqués</p>
                 </div>
-                
-                <!-- Bloc Photo de Profil -->
                 <div class="header-photo">
-                    <!-- IMAGE MISE À JOUR ICI -->
                     <img src="1000015067.jpg" alt="Baptiste Maizeaud" class="profile-photo">
                 </div>
             </div>
@@ -364,144 +254,115 @@
 
     <div class="container">
 
-        <!-- 1. OBJECTIFS -->
+        <!-- OBJECTIFS -->
         <section id="objectifs">
             <h2 class="section-title">Objectifs Professionnels</h2>
             <div class="card">
-                <div class="objective-content">
-                    <p>
-                        Mon parcours actuel en <span class="highlight">BUT Génie Électrique et Informatique Industrielle (GEII)</span> est la fondation stratégique de mon projet professionnel. Fort de mes connaissances en automatismes, en électronique de puissance et en systèmes embarqués, mon ambition claire est de devenir Ingénieur.
-                    </p>
-                    <br>
-                    <p>
-                        Je souhaite mettre ces compétences techniques pointues au service d'un acteur majeur de la transition énergétique. Mon objectif ultime est d'intégrer le groupe <span class="highlight">EDF</span> afin de participer activement aux défis de la production et de la distribution d'énergie.
-                    </p>
-                </div>
+                <p>
+                    Mon parcours actuel en <span style="font-weight:bold; color:var(--primary-blue)">BUT Génie Électrique et Informatique Industrielle (GEII)</span> est la fondation stratégique de mon projet professionnel. Fort de mes connaissances en automatismes, en électronique de puissance et en systèmes embarqués, mon ambition est de devenir Ingénieur.
+                </p>
+                <br>
+                <p>
+                    Je souhaite mettre ces compétences au service d'un acteur majeur de la transition énergétique, avec pour objectif d'intégrer le groupe <span style="font-weight:bold; color:var(--primary-blue)">EDF</span>.
+                </p>
             </div>
         </section>
 
-        <!-- 2. PASSIONS & SOFT SKILLS (Séparé en deux cases) -->
-        <section id="passions">
-            <h2 class="section-title">Profil & Approche</h2>
-            <div class="passions-grid">
-                
-                <!-- Case 1 : Performance -->
-                <div class="card">
-                    <i class="fas fa-tachometer-alt passion-icon"></i>
-                    <h3>Performance & Précision</h3>
-                    <p style="margin-top: 15px; text-align: justify;">
-                        Mes centres d'intérêt reflètent une affinité pour la performance. L'énergie, qu'elle soit au cœur des systèmes complexes que j'étudie ou un enjeu sociétal, capte mon attention. Cette recherche d'excellence se retrouve dans mon admiration pour la <strong>Formule 1</strong> et le <strong>Rally</strong>, symboles d'ingénierie poussée et de gestion de risques.
-                    </p>
-                </div>
-
-                <!-- Case 2 : Persévérance -->
-                <div class="card">
-                    <i class="fas fa-running passion-icon"></i>
-                    <h3>Persévérance & Rigueur</h3>
-                    <p style="margin-top: 15px; text-align: justify;">
-                        Ma pratique du vélo et de la <strong>course à pieds</strong> exige de l'endurance, tandis que le <strong>piano</strong> m'apporte la rigueur et le souci du détail nécessaires à la réussite de projets complexes. Ces passions m'animent et me préparent à aborder avec méthode les défis techniques de l'ingénierie.
-                    </p>
-                </div>
-
-            </div>
-        </section>
-
-        <!-- 3. COMPÉTENCES TECHNIQUES (Style Liste propre) -->
+        <!-- COMPÉTENCES TECHNIQUES -->
         <section id="competences">
             <h2 class="section-title">Compétences Techniques</h2>
+            
             <div class="skills-container">
-                
                 <!-- Case Concevoir -->
-                <div class="card skill-box">
+                <div class="card">
                     <div class="skill-header">
                         <i class="fas fa-drafting-compass"></i>
                         <h3>I. Concevoir</h3>
                     </div>
                     <ul class="skill-list">
-                        <li><strong>Analyse fonctionnelle :</strong> Identifier les fonctions, contraintes et besoins d'un système simple.</li>
-                        <li><strong>Prototypage :</strong> Réaliser des solutions techniques matérielles et logicielles (Arduino, API).</li>
-                        <li><strong>Documentation :</strong> Rédiger un dossier de fabrication (spécifications, nomenclatures).</li>
+                        <li>Analyse fonctionnelle</li>
+                        <li>Prototypage (Arduino, API)</li>
+                        <li>Documentation technique</li>
                     </ul>
                 </div>
 
                 <!-- Case Vérifier -->
-                <div class="card skill-box">
+                <div class="card">
                     <div class="skill-header">
                         <i class="fas fa-check-double"></i>
                         <h3>II. Vérifier</h3>
                     </div>
                     <ul class="skill-list">
-                        <li><strong>Essais :</strong> Appliquer une procédure de test par rapport aux spécifications.</li>
-                        <li><strong>Diagnostic :</strong> Identifier et localiser l'origine d'une panne (dysfonctionnement).</li>
-                        <li><strong>Maintenance :</strong> Formaliser l'anomalie de manière claire pour la correction.</li>
+                        <li>Procédures d'essais</li>
+                        <li>Diagnostic de pannes</li>
+                        <li>Maintenance curative</li>
                     </ul>
                 </div>
 
+                <!-- Case Logiciels (AJOUTÉE) -->
+                <div class="card">
+                    <div class="skill-header">
+                        <i class="fas fa-laptop-code"></i>
+                        <h3>III. Logiciels & Code</h3>
+                    </div>
+                    <ul class="skill-list">
+                        <li>Simulation (SimulIDE, LTSpice) <span class="level-badge haut">Haut</span></li>
+                        <li>Codage C / C++ <span class="level-badge moyen">Moyen</span></li>
+                        <li>Programmation Arduino <span class="level-badge moyen">Moyen</span></li>
+                        <li>Création de PCB (CAO) <span class="level-badge moyen">Moyen</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- GRAPHIQUE DES COMPÉTENCES (AJOUTÉ) -->
+            <div class="chart-container">
+                <h3 style="color: var(--primary-blue); margin-bottom: 20px; text-align: center;">Profil de Compétences</h3>
+                <canvas id="skillsChart" height="120"></canvas>
             </div>
         </section>
 
-        <!-- 4. PROJETS (Grille de cartes) -->
+        <!-- PROJETS -->
         <section id="projets">
             <h2 class="section-title">Projets Réalisés (SAE)</h2>
             <div class="projects-grid">
                 
                 <!-- Projet 1 -->
                 <article class="project-card">
-                    <div class="project-img-placeholder">
-                        <i class="fas fa-industry fa-3x"></i>
-                    </div>
+                    <div class="project-img-placeholder"><i class="fas fa-industry fa-3x"></i></div>
                     <div class="project-body">
-                        <h3>Automatisme Chaîne de Prod.</h3>
-                        <p>Programmation d'un automate pour la gestion d'une ligne d'assemblage. Analyse fonctionnelle et Grafcet.</p>
-                        <div class="tags">
-                            <span class="tag">PLC</span>
-                            <span class="tag">Grafcet</span>
-                        </div>
+                        <h3>Automatisme Chaîne</h3>
+                        <p>Programmation PLC et Grafcet.</p>
+                        <div class="tags"><span class="tag">PLC</span><span class="tag">Industrie</span></div>
                     </div>
                 </article>
 
-                <!-- Projet 2 (Régulateur de Température) - REDIRECTION AJOUTÉE -->
-                <a href="sae-regulateur.html" class="project-card" title="Voir les détails du projet Régulateur">
-                    <!-- Image ajoutée pour le Régulateur de Température -->
+                <!-- Projet 2 (Régulateur) -->
+                <a href="sae-regulateur.html" class="project-card">
                     <img src="image_c75620.png" alt="Régulateur de Température">
-                    
                     <div class="project-body">
                         <h3>Régulateur de Température</h3>
-                        <p>Conception d'un système de régulation thermique. Choix des capteurs et programmation de la boucle de contrôle.</p>
-                        <div class="tags">
-                            <span class="tag">Électronique</span>
-                            <span class="tag">Régulation</span>
-                        </div>
+                        <p>Asservissement analogique et CAO.</p>
+                        <div class="tags"><span class="tag">Électronique</span><span class="tag">Régulation</span></div>
                     </div>
                 </a>
 
-                <!-- Projet 3 -->
+                <!-- Projet 3 (Robot) -->
                 <article class="project-card">
-                    <div class="project-img-placeholder">
-                        <i class="fas fa-robot fa-3x"></i>
-                    </div>
+                    <div class="project-img-placeholder"><i class="fas fa-robot fa-3x"></i></div>
                     <div class="project-body">
-                        <h3>Robot Joueur de Tennis</h3>
-                        <p>Développement technique complet (mécanique et logiciel) d'un lanceur de balles automatisé.</p>
-                        <div class="tags">
-                            <span class="tag">Système Embarqué</span>
-                            <span class="tag">Mécanique</span>
-                        </div>
+                        <h3>Robot Tennis</h3>
+                        <p>Lanceur de balles automatisé.</p>
+                        <div class="tags"><span class="tag">Embarqué</span><span class="tag">Mécanique</span></div>
                     </div>
                 </article>
 
-                <!-- Projet 4 (SAE Multimètre) - REDIRECTION -->
-                <a href="sae-multimetre.html" class="project-card" title="Voir les détails du projet Multimètre">
-                    <!-- Assurez-vous que l'image du multimètre est bien dans le dossier -->
-                    <img src="1763544704584 (1).jpg" alt="Multimètre Numérique SAE">
-                    
+                <!-- Projet 4 (Multimètre) -->
+                <a href="sae-multimetre.html" class="project-card">
+                    <img src="1763544704584 (1).jpg" alt="Multimètre Numérique">
                     <div class="project-body">
                         <h3>SAE Multimètre</h3>
-                        <p>Conception, soudure et calibration d'un multimètre numérique. Validation des chaînes de mesure (tension, courant).</p>
-                        <div class="tags">
-                            <span class="tag">Électronique</span>
-                            <span class="tag">Mesure</span>
-                        </div>
+                        <p>Soudure et métrologie numérique.</p>
+                        <div class="tags"><span class="tag">Mesure</span><span class="tag">Électronique</span></div>
                     </div>
                 </a>
 
@@ -510,7 +371,6 @@
 
     </div>
 
-    <!-- FOOTER -->
     <footer>
         <div class="container">
             <h3>Me Contacter</h3>
@@ -524,5 +384,47 @@
         </div>
     </footer>
 
+    <script>
+        // Initialisation du graphique Chart.js
+        const ctx = document.getElementById('skillsChart').getContext('2d');
+        const skillsChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Simulation (LTSpice)', 'Diagnostic / Essais', 'Conception / Proto', 'Arduino', 'Codage C/C++', 'Création PCB'],
+                datasets: [{
+                    label: 'Niveau de maîtrise (%)',
+                    data: [95, 85, 80, 65, 60, 60],
+                    backgroundColor: [
+                        '#FFD700', // Jaune pour le point fort
+                        '#001f3f', '#001f3f', '#001f3f', '#001f3f', '#001f3f'
+                    ],
+                    borderRadius: 5,
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                indexAxis: 'y', // Graphique horizontal pour la lisibilité
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: { display: false },
+                        ticks: { color: '#666' }
+                    },
+                    y: {
+                        grid: { display: false },
+                        ticks: { 
+                            color: '#001f3f',
+                            font: { weight: 'bold' }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
