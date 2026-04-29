@@ -32,6 +32,7 @@
             background-color: var(--bg-color);
             color: var(--text-dark);
             line-height: 1.6;
+            scroll-behavior: smooth;
         }
 
         /* ================= LAYOUT GÉNÉRAL ================= */
@@ -69,47 +70,64 @@
             padding: 35px;
             box-shadow: var(--shadow);
             border-top: 4px solid var(--primary-blue);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        /* ================= HEADER / HERO (RÉDUIT) ================= */
+        /* ================= HEADER / HERO RÉDUIT ================= */
         header {
-            background-color: var(--primary-blue);
+            background: var(--primary-blue) url('banniere.jpg') no-repeat center center;
+            background-size: cover;
             color: white;
-            padding: 40px 0 70px 0; /* Padding réduit de 60/100 à 40/70 */
+            padding: 60px 0 90px 0; /* Réduction des paddings (anciennement 100px/140px) */
+            min-height: 320px;       /* Réduction de la hauteur min (anciennement 400px) */
             clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
             margin-bottom: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
         }
 
         .header-content {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 40px; /* Gap réduit de 60 à 40 */
+            gap: 40px; /* Réduction de l'espace (anciennement 60px) */
             flex-wrap: wrap;
+            position: relative;
+            z-index: 2;
+            width: 100%;
         }
 
         .header-text { text-align: left; max-width: 600px; }
 
-        header h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 8px; } /* Taille réduite de 3rem à 2.5rem */
+        header h1 { 
+            font-size: 3rem; /* Réduction légère (anciennement 3.5rem) */
+            font-weight: 700; 
+            margin-bottom: 5px; 
+            text-shadow: 2px 2px 15px rgba(0,0,0,0.9); 
+        }
 
         header .subtitle {
-            font-size: 1.1rem; /* Légèrement réduit */
-            font-weight: 300;
+            font-size: 1.2rem;
+            font-weight: 400;
             color: var(--accent-yellow);
             letter-spacing: 1px;
+            text-shadow: 1px 1px 8px rgba(0,0,0,0.9);
         }
 
         .profile-photo {
-            width: 150px; /* Taille réduite de 180px à 150px */
-            height: 150px;
+            width: 170px; /* Réduction légère (anciennement 200px) */
+            height: 170px;
             border-radius: 50%;
             object-fit: cover; 
-            border: 3px solid white;
-            box-shadow: 0 0 0 5px var(--accent-yellow), 0 0 0 10px var(--primary-blue), 0 10px 25px rgba(0,0,0,0.4);
+            border: 5px solid white;
+            box-shadow: 0 0 0 6px var(--accent-yellow), 0 15px 35px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
         }
 
-        /* ================= SECTION COMPÉTENCES ================= */
+        .profile-photo:hover { transform: scale(1.05) rotate(2deg); }
+
+        /* ================= SECTION COMPÉTENCES / AC ================= */
         .skills-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -141,9 +159,18 @@
         .skill-list { list-style: none; }
         .skill-list li {
             margin-bottom: 12px;
-            padding-left: 20px;
+            padding: 8px 8px 8px 25px;
             position: relative;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
+            border-radius: 6px;
+            transition: background 0.2s ease;
+        }
+
+        .ac-list li {
+            cursor: pointer;
+        }
+        .ac-list li:hover {
+            background-color: rgba(0, 0, 0, 0.03);
         }
 
         .skill-list li::before {
@@ -152,17 +179,16 @@
             font-weight: bold;
             font-size: 1.4rem;
             position: absolute;
-            left: 0;
-            top: -4px;
+            left: 5px;
+            top: 2px;
         }
 
-        /* Badges de statut */
         .ac-status {
             display: inline-block;
-            font-size: 0.65rem;
+            font-size: 0.6rem;
             background-color: #fffbeb;
             color: #b45309;
-            padding: 2px 8px;
+            padding: 1px 6px;
             border-radius: 10px;
             margin: 0 5px;
             font-weight: bold;
@@ -171,6 +197,7 @@
             vertical-align: middle;
         }
 
+        /* Liste Icônes Logiciels */
         .skill-list-icons { list-style: none; padding-left: 0; }
         .skill-list-icons li {
             margin-bottom: 15px;
@@ -217,12 +244,22 @@
             border-radius: 12px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: transform 0.3s;
+            transition: all 0.4s ease;
             text-decoration: none;
             color: inherit;
+            border: 3px solid transparent;
         }
         
         .project-card:hover { transform: translateY(-5px); }
+
+        @keyframes pulse-highlight {
+            0% { border-color: transparent; transform: scale(1); }
+            50% { border-color: var(--accent-yellow); transform: scale(1.02); box-shadow: 0 0 20px rgba(255, 215, 0, 0.4); }
+            100% { border-color: transparent; transform: scale(1); }
+        }
+        .project-highlight {
+            animation: pulse-highlight 1.2s ease-in-out 2;
+        }
 
         .project-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
 
@@ -257,10 +294,10 @@
         .social-links a:hover { color: var(--accent-yellow); }
 
         @media (max-width: 768px) {
-            header h1 { font-size: 1.8rem; }
+            header h1 { font-size: 2.2rem; }
             .header-content { flex-direction: column-reverse; text-align: center; }
             .header-text { text-align: center; }
-            .profile-photo { width: 120px; height: 120px; }
+            header { padding: 40px 0 60px 0; min-height: 280px; }
         }
     </style>
 </head>
@@ -274,7 +311,7 @@
                     <p class="subtitle">BUT GEII | Électronique et Systèmes Embarqués</p>
                 </div>
                 <div class="header-photo">
-                    <img src="1000015067.jpg" alt="Baptiste Maizeaud" class="profile-photo" onerror="this.src='https://via.placeholder.com/150?text=BM'">
+                    <img src="1000015067.jpg" alt="Baptiste Maizeaud" class="profile-photo">
                 </div>
             </div>
         </div>
@@ -282,9 +319,12 @@
 
     <div class="container">
 
-        <!-- SECTION 1 : APPRENTISSAGES CRITIQUES -->
+        <!-- 1. APPRENTISSAGES CRITIQUES -->
         <section id="apprentissages">
-            <h2 class="section-title">Apprentissages Critiques</h2>
+            <h2 class="section-title">Apprentissages Critiques (AC)</h2>
+            <p style="text-align: center; margin-top: -20px; margin-bottom: 30px; color: var(--text-light); font-size: 0.9rem;">
+                <i class="fas fa-mouse-pointer"></i> Cliquez sur un AC pour mettre en évidence les SAE associées
+            </p>
             <div class="skills-container">
                 <!-- AC Concevoir -->
                 <div class="card" style="border-top: 4px solid var(--ac-concevoir);">
@@ -292,11 +332,17 @@
                         <i class="fas fa-drafting-compass" style="background-color: var(--ac-concevoir); color: white;"></i>
                         <h3 style="color: var(--ac-concevoir);">Concevoir</h3>
                     </div>
-                    <p style="font-size: 0.9rem; font-style: italic; margin-bottom: 15px; color: var(--text-light);">Concevoir la partie GEII d'un système</p>
-                    <ul class="skill-list" style="font-size: 0.85rem;">
-                        <li><strong>CE1.01</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> En adoptant une approche holistique intégrant les innovations technologiques en lien avec la stratégie de l'entreprise pour répondre à un besoin client.</li>
-                        <li><strong>CE1.02</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> En produisant l’ensemble des documents nécessaires pour le client et les différents prestataires.</li>
-                        <li><strong>CE1.03</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> En communiquant de façon adaptée avec les différents acteurs avant et pendant la phase de conception.</li>
+                    <p style="font-size: 0.9rem; font-style: italic; margin-bottom: 10px; color: var(--text-light);">Concevoir la partie GEII d'un système</p>
+                    <ul class="skill-list ac-list">
+                        <li onclick="highlightProjects(['sae-regulateur', 'sae-robot', 'sae-automatisme'])">
+                            <strong>AC11.01</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> Produire une <b>analyse fonctionnelle</b> d'un système simple.
+                        </li>
+                        <li onclick="highlightProjects(['sae-multimetre', 'sae-regulateur', 'sae-robot', 'sae-automatisme'])">
+                            <strong>AC11.02</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> Réaliser un <b>prototype</b> pour des solutions techniques.
+                        </li>
+                        <li onclick="highlightProjects(['sae-regulateur', 'sae-robot', 'sae-automatisme'])">
+                            <strong>AC11.03</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> Rédiger un <b>dossier de fabrication</b> à partir d'un dossier de conception.
+                        </li>
                     </ul>
                 </div>
 
@@ -306,110 +352,121 @@
                         <i class="fas fa-check-double" style="background-color: var(--ac-verifier); color: white;"></i>
                         <h3 style="color: var(--ac-verifier);">Vérifier</h3>
                     </div>
-                    <p style="font-size: 0.9rem; font-style: italic; margin-bottom: 15px; color: var(--text-light);">Vérifier la partie GEII d'un système</p>
-                    <ul class="skill-list" style="font-size: 0.85rem;">
-                        <li><strong>CE2.01</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> En tenant compte des spécificités matérielles, réglementaires et contextuelles.</li>
-                        <li><strong>CE2.02</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> En mettant en oeuvre un plan d’essais et d’évaluations, dans une visée d’analyse qualitative et corrective.</li>
-                        <li><strong>CE2.03</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> En tenant compte des enjeux économiques, environnementaux et réglementaires de la société.</li>
+                    <p style="font-size: 0.9rem; font-style: italic; margin-bottom: 10px; color: var(--text-light);">Vérifier la partie GEII d'un système</p>
+                    <ul class="skill-list ac-list">
+                        <li onclick="highlightProjects(['sae-multimetre', 'sae-regulateur', 'sae-robot', 'sae-automatisme'])">
+                            <strong>AC12.01</strong> <span class="ac-status">En cours d'acquisition</span> <strong>|</strong> Appliquer une <b>procédure d'essais</b>.
+                        </li>
+                        <li onclick="highlightProjects(['sae-robot', 'sae-automatisme'])">
+                            <strong>AC12.02 |</strong> <b>Identifier</b> un dysfonctionnement (localiser l'origine d'une panne).
+                        </li>
+                        <li onclick="highlightProjects(['sae-robot', 'sae-automatisme'])">
+                            <strong>AC12.03 |</strong> <b>Décrire</b> un dysfonctionnement technique pour la maintenance.
+                        </li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 2 : OBJECTIFS PROFESSIONNELS -->
-        <section id="objectifs">
-            <h2 class="section-title">Objectifs Professionnels</h2>
-            <div class="card">
-                <p>
-                    Mon parcours actuel en <span style="font-weight:bold; color:var(--primary-blue)">BUT Génie Électrique et Informatique Industrielle (GEII)</span> est la fondation stratégique de mon projet professionnel. Fort de mes connaissances en automatismes, en électronique de puissance et en systèmes embarqués, mon ambition est de devenir <span style="font-weight:bold;">Ingénieur</span>.
-                </p>
-                <br>
-                <p>
-                    Je souhaite mettre ces compétences au service d'un acteur majeur de la transition énergétique, avec pour objectif d'intégrer le groupe <span style="font-weight:bold; color:var(--primary-blue)">EDF</span>.
-                </p>
-            </div>
-        </section>
-
-        <!-- SECTION 3 : COMPÉTENCES TECHNIQUES -->
+        <!-- 2. COMPÉTENCES TECHNIQUES -->
         <section id="competences">
             <h2 class="section-title">Compétences Techniques</h2>
             
             <div class="skills-container">
+                <!-- Case I : Méthodes -->
                 <div class="card">
                     <div class="skill-header">
                         <i class="fas fa-pencil-ruler"></i>
-                        <h3>I. Concevoir</h3>
+                        <h3>I. Méthodes</h3>
                     </div>
                     <ul class="skill-list-icons">
-                        <li><div class="logo-box"><i class="fas fa-sitemap"></i></div>Analyse fonctionnelle</li>
-                        <li><div class="logo-box"><i class="fas fa-tools"></i></div>Prototypage (Arduino, API)</li>
-                        <li><div class="logo-box"><i class="fas fa-file-signature"></i></div>Documentation technique</li>
+                        <li><div class="logo-box"><i class="fas fa-sitemap" style="color: var(--primary-blue);"></i></div>Réaliser des analyses fonctionnelles</li>
+                        <li><div class="logo-box"><i class="fas fa-tools" style="color: var(--primary-blue);"></i></div>Prototyper des solutions techniques</li>
+                        <li><div class="logo-box"><i class="fas fa-file-signature" style="color: var(--primary-blue);"></i></div>Rédiger des dossiers de fabrication</li>
                     </ul>
                 </div>
 
+                <!-- Case II : Réalisation & Essais -->
                 <div class="card">
                     <div class="skill-header">
                         <i class="fas fa-vial"></i>
-                        <h3>II. Vérifier</h3>
+                        <h3>II. Réalisation & Essais</h3>
                     </div>
                     <ul class="skill-list-icons">
-                        <li><div class="logo-box"><i class="fas fa-clipboard-check"></i></div>Procédures d'essais</li>
-                        <li><div class="logo-box"><i class="fas fa-wrench"></i></div>Diagnostic de pannes</li>
+                        <li><div class="logo-box"><i class="fas fa-bolt" style="color: var(--primary-blue);"></i></div>Câbler des armoires électriques</li>
+                        <li><div class="logo-box"><i class="fas fa-fire" style="color: var(--primary-blue);"></i></div>Effectuer des soudures (CMS & traversants)</li>
+                        <li><div class="logo-box"><i class="fas fa-clipboard-check" style="color: var(--primary-blue);"></i></div>Appliquer des procédures d'essais</li>
+                        <li><div class="logo-box"><i class="fas fa-wrench" style="color: var(--primary-blue);"></i></div>Diagnostiquer des dysfonctionnements</li>
                     </ul>
                 </div>
 
+                <!-- Case III : Logiciels & Code -->
                 <div class="card">
                     <div class="skill-header">
                         <i class="fas fa-laptop-code"></i>
                         <h3>III. Logiciels & Code</h3>
                     </div>
                     <ul class="skill-list-icons">
-                        <li><div class="logo-box"><i class="fas fa-microchip"></i></div>Simulation (SimulIDE) <span class="level-badge moyen">Moyen</span></li>
-                        <li><div class="logo-box"><i class="fab fa-cuttlefish"></i></div>Codage C / C++ <span class="level-badge moyen">Moyen</span></li>
-                        <li><div class="logo-box"><i class="fas fa-infinity"></i></div>Programmation Arduino <span class="level-badge moyen">Moyen</span></li>
-                        <li><div class="logo-box"><i class="fas fa-layer-group"></i></div>Création de PCB (KiCad) <span class="level-badge moyen">Moyen</span></li>
+                        <li><div class="logo-box"><img src="simulide-logo.png" alt="SimulIDE"></div>Simuler des circuits électroniques <span class="level-badge moyen">Moyen</span></li>
+                        <li><div class="logo-box"><svg viewBox="0 0 128 128"><path fill="#00599C" d="M64 14L14.6 38.8v50.5L64 114l49.4-24.7V38.8L64 14z"/><path fill="#FFF" d="M100.5 44.3c-2.3-5.3-6-9.6-11.1-12.7-5.1-3.2-11.1-4.7-18-4.7-8.1 0-15.1 2.1-20.9 6.2s-10.2 9.8-13.1 16.9c-2.9 7.1-4.4 15.2-4.4 24.2 0 8.9 1.4 16.9 4.3 24s7.2 12.6 13 16.7c5.8 4 12.8 6.1 20.9 6.1 6.8 0 12.8-1.5 18-4.6 5.2-3.1 9-7.5 11.4-13.1l-14.7-5.1c-2.3 5.4-6.4 8.2-12.3 8.2-4.5 0-8.2-1.3-11.3-3.9-3-2.6-5.3-6.2-6.7-10.7-1.4-4.5-2.1-9.6-2.1-15.3 0-5.7.7-10.9 2.1-15.4 1.4-4.5 3.7-8.1 6.8-10.8s6.9-4 11.5-4c6.3 0 10.7 3.3 13.2 10l14.7-5.3zm.5 17.5v3h10v-3h-10zm0 10v3h10v-3h-10zm-15-5h3v10h-3V66.8zm10 0h3v10h-3V66.8z"/></svg></div>Développer en C / C++ <span class="level-badge moyen">Moyen</span></li>
+                        <li><div class="logo-box"><img src="arduino-icon-17552.png" alt="Arduino"></div>Programmer des systèmes embarqués <span class="level-badge moyen">Moyen</span></li>
+                        <li><div class="logo-box"><img src="kicad_logo.png" alt="KiCad"></div>Concevoir des circuits imprimés (PCB) <span class="level-badge moyen">Moyen</span></li>
                     </ul>
                 </div>
             </div>
         </section>
 
-        <!-- SECTION 4 : PROJETS -->
+        <!-- 3. OBJECTIFS PROFESSIONNELS -->
+        <section id="objectifs">
+            <h2 class="section-title">Objectifs Professionnels</h2>
+            <div class="card">
+                <p>
+                    Mon parcours en <span style="font-weight:bold; color:var(--primary-blue)">BUT GEII</span> me permet de forger une base solide en électronique et systèmes embarqués. Mon ambition est de devenir Ingénieur et de mettre mes compétences au service de <span style="font-weight:bold; color:var(--primary-blue)">EDF</span>.
+                </p>
+            </div>
+        </section>
+
+        <!-- 4. PROJETS -->
         <section id="projets">
             <h2 class="section-title">Projets Réalisés (SAE)</h2>
             <div class="projects-grid">
                 
-                <article class="project-card">
+                <!-- Projet 1 -->
+                <article class="project-card" id="sae-automatisme">
                     <div class="project-img-placeholder"><i class="fas fa-industry fa-3x"></i></div>
                     <div class="project-body">
                         <h3>Automatisme Chaîne</h3>
-                        <p>Programmation PLC et Grafcet.</p>
+                        <p>Programmation PLC et analyse de Grafcet pour chaîne de production.</p>
                         <div class="tags"><span class="tag">PLC</span><span class="tag">Industrie</span></div>
                     </div>
                 </article>
 
-                <a href="sae-regulateur.html" class="project-card">
-                    <div class="project-img-placeholder" style="background-color: #e3f2fd;"><i class="fas fa-thermometer-half fa-3x" style="color: #1976d2;"></i></div>
+                <!-- Projet 2 -->
+                <a href="sae-regulateur.html" class="project-card" id="sae-regulateur">
+                    <img src="image_c75620.png" alt="Régulateur de Température">
                     <div class="project-body">
                         <h3>Régulateur de Température</h3>
-                        <p>Asservissement analogique et CAO.</p>
+                        <p>Étude, simulation et réalisation d'un asservissement analogique complet.</p>
                         <div class="tags"><span class="tag">Électronique</span><span class="tag">Régulation</span></div>
                     </div>
                 </a>
 
-                <article class="project-card">
+                <!-- Projet 3 -->
+                <article class="project-card" id="sae-robot">
                     <div class="project-img-placeholder"><i class="fas fa-robot fa-3x"></i></div>
                     <div class="project-body">
                         <h3>Robot Tennis</h3>
-                        <p>Lanceur de balles automatisé.</p>
-                        <div class="tags"><span class="tag">Embarqué</span><span class="tag">Mécanique</span></div>
+                        <p>Conception d'un robot joueur de tennis automatisé (Embarqué).</p>
+                        <div class="tags"><span class="tag">Robotique</span><span class="tag">Mécanique</span></div>
                     </div>
                 </article>
 
-                <a href="sae-multimetre.html" class="project-card">
-                    <div class="project-img-placeholder" style="background-color: #fff3e0;"><i class="fas fa-tachometer-alt fa-3x" style="color: #e65100;"></i></div>
+                <!-- Projet 4 -->
+                <a href="sae-multimetre.html" class="project-card" id="sae-multimetre">
+                    <img src="1763544704584 (1).jpg" alt="Multimètre Numérique">
                     <div class="project-body">
                         <h3>SAE Multimètre</h3>
-                        <p>Soudure et métrologie numérique.</p>
+                        <p>Conception d'une chaîne de mesure, soudure et étalonnage métrologique.</p>
                         <div class="tags"><span class="tag">Mesure</span><span class="tag">Électronique</span></div>
                     </div>
                 </a>
@@ -424,13 +481,37 @@
             <h3>Me Contacter</h3>
             <p style="margin: 15px 0;">baptiste.maizeaud@gmail.com</p>
             <div class="social-links">
-                <a href="https://www.linkedin.com/in/baptiste-maizeaud-118008384" target="_blank"><i class="fab fa-linkedin"></i></a>
-                <a href="https://github.com/cyborg086" target="_blank"><i class="fab fa-github"></i></a>
-                <a href="mailto:baptiste.maizeaud@gmail.com"><i class="fas fa-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/baptiste-maizeaud-118008384"><i class="fab fa-linkedin"></i></a>
+                <a href="https://github.com/Baptiste-Maizeaud"><i class="fab fa-github"></i></a>
+                <a href="#"><i class="fas fa-envelope"></i></a>
             </div>
-            <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.7;">© 2026 - Portfolio BUT GEII - Baptiste Maizeaud</p>
+            <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.7;">© 2026 - Portfolio BUT GEII</p>
         </div>
     </footer>
+
+    <script>
+        /**
+         * Met en évidence les projets liés à un AC spécifique
+         * @param {Array} projectIds - IDs des projets à surligner
+         */
+        function highlightProjects(projectIds) {
+            const projectsSection = document.getElementById('projets');
+            projectsSection.scrollIntoView({ behavior: 'smooth' });
+
+            document.querySelectorAll('.project-card').forEach(card => {
+                card.classList.remove('project-highlight');
+            });
+
+            setTimeout(() => {
+                projectIds.forEach(id => {
+                    const project = document.getElementById(id);
+                    if (project) {
+                        project.classList.add('project-highlight');
+                    }
+                });
+            }, 400);
+        }
+    </script>
 
 </body>
 </html>
